@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "projects": {
+    "ng-content": {
+      "projectType": "application",
+      "root": "apps/ng-content",
+      "sourceRoot": "apps/ng-content/src",
+      "prefix": "ng-content",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/ng-content",
+            "index": "apps/ng-content/src/index.html",
+            "main": "apps/ng-content/src/main.ts",
+            "polyfills": "apps/ng-content/src/polyfills.ts",
+            "tsConfig": "apps/ng-content/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/ng-content/src/favicon.ico",
+              "apps/ng-content/src/assets",
+              "apps/ng-content/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "apps/ng-content/src/styles.scss"
+            ],
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "apps/ng-content/ngsw-config.json"
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/ng-content/src/environments/environment.ts",
+                  "with": "apps/ng-content/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-content:build:production"
+            },
+            "development": {
+              "browserTarget": "ng-content:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-content:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ng-content/src/**/*.ts",
+              "apps/ng-content/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/ng-content"
+          ],
+          "options": {
+            "jestConfig": "apps/ng-content/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "ng-content-e2e": {
+      "root": "apps/ng-content-e2e",
+      "sourceRoot": "apps/ng-content-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ng-content-e2e/cypress.json",
+            "devServerTarget": "ng-content:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-content:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/ng-content-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": [
+        "ng-content"
+      ]
+    }
+  }
+}
